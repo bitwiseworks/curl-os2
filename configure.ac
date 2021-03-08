@@ -5066,25 +5066,35 @@ AC_HELP_STRING([--disable-alt-svc],[Disable alt-svc support]),
        AC_MSG_RESULT(no)
 )
 
-dnl ************************************************************
-dnl switch on/off hsts
-dnl
-AC_MSG_CHECKING([whether to support HSTS])
-AC_ARG_ENABLE(hsts,
-AC_HELP_STRING([--enable-hsts],[Enable HSTS support])
-AC_HELP_STRING([--disable-hsts],[Disable HSTS support]),
-[ case "$enableval" in
-  no)
+dnl only check for HSTS if there's SSL present
+if test -n "$SSL_ENABLED"; then
+
+  dnl ************************************************************
+  dnl switch on/off hsts
+  dnl
+  AC_MSG_CHECKING([whether to support HSTS])
+  AC_ARG_ENABLE(hsts,
+  AC_HELP_STRING([--enable-hsts],[Enable HSTS support])
+  AC_HELP_STRING([--disable-hsts],[Disable HSTS support]),
+  [ case "$enableval" in
+    no)
        AC_MSG_RESULT(no)
-       curl_hsts_msg="no      (--enable-hsts)";
-       AC_DEFINE(CURL_DISABLE_HSTS, 1, [disable alt-svc])
        enable_hsts="no"
        ;;
-  *) AC_MSG_RESULT(yes)
+    *) AC_MSG_RESULT(yes)
        ;;
-  esac ],
+    esac ],
        AC_MSG_RESULT(no)
-)
+  )
+else
+  AC_MSG_NOTICE([disables HSTS due to lack of SSL])
+  enable_hsts="no"
+fi
+
+if test "x$enable_hsts" != "xyes"; then
+  curl_hsts_msg="no      (--enable-hsts)";
+  AC_DEFINE(CURL_DISABLE_HSTS, 1, [disable alt-svc])
+fi
 
 dnl *************************************************************
 dnl check whether ECH support, if desired, is actually available
