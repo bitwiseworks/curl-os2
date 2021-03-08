@@ -25,7 +25,7 @@
  */
 #include "curl_setup.h"
 
-#if !defined(CURL_DISABLE_HTTP) && defined(USE_HSTS)
+#if !defined(CURL_DISABLE_HTTP) && !defined(CURL_DISABLE_HSTS)
 #include <curl/curl.h>
 #include "urldata.h"
 #include "llist.h"
@@ -441,7 +441,10 @@ static CURLcode hsts_pull(struct Curl_easy *data, struct hsts *h)
           expires = Curl_getdate_capped(e.expire);
         else
           expires = TIME_T_MAX; /* the end of time */
-        result = hsts_create(h, e.name, e.includeSubDomains, expires);
+        result = hsts_create(h, e.name,
+                             /* bitfield to bool conversion: */
+                             e.includeSubDomains ? TRUE : FALSE,
+                             expires);
         if(result)
           return result;
       }
@@ -519,4 +522,4 @@ CURLcode Curl_hsts_loadcb(struct Curl_easy *data, struct hsts *h)
   return hsts_pull(data, h);
 }
 
-#endif /* CURL_DISABLE_HTTP || USE_HSTS */
+#endif /* CURL_DISABLE_HTTP || CURL_DISABLE_HSTS */
