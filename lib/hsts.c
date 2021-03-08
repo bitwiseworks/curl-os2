@@ -37,6 +37,7 @@
 #include "parsedate.h"
 #include "rand.h"
 #include "rename.h"
+#include "strtoofft.h"
 
 /* The last 3 #include files should be in this order */
 #include "curl_printf.h"
@@ -60,7 +61,10 @@ static time_t debugtime(void *unused)
   char *timestr = getenv("CURL_TIME");
   (void)unused;
   if(timestr) {
-    unsigned long val = strtol(timestr, NULL, 10) + deltatime;
+    curl_off_t val;
+    (void)curlx_strtoofft(timestr, NULL, 10, &val);
+
+    val += (curl_off_t)deltatime;
     return (time_t)val;
   }
   return time(NULL);
