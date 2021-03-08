@@ -280,7 +280,7 @@ static CURLcode hsts_push(struct Curl_easy *data,
   e.namelen = strlen(sts->host);
   e.includeSubDomains = sts->includeSubDomains;
 
-  result = Curl_gmtime(sts->expires, &stamp);
+  result = Curl_gmtime((time_t)sts->expires, &stamp);
   if(result)
     return result;
 

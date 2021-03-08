@@ -35,7 +35,7 @@ struct stsentry {
   struct Curl_llist_element node;
   const char *host;
   bool includeSubDomains;
-  time_t expires; /* the timestamp of this entry's expiry */
+  curl_off_t expires; /* the timestamp of this entry's expiry */
 };
 
 /* The HSTS cache. Needs to be able to tailmatch host names. */
