@@ -300,7 +300,7 @@ static CURLcode hsts_push(struct Curl_easy *data,
 static CURLcode hsts_out(struct stsentry *sts, FILE *fp)
 {
   struct tm stamp;
-  CURLcode result = Curl_gmtime(sts->expires, &stamp);
+  CURLcode result = Curl_gmtime((time_t)sts->expires, &stamp);
   if(result)
     return result;
 
