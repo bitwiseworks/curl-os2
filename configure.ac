@@ -4597,7 +4597,7 @@ if test "$want_pthreads" != "no"; then
       then
         CFLAGS="$CFLAGS -pthread"
         # assign PTHREAD for pkg-config use
-        PTHREAD=" -pthread"
+        PTHREAD=" -lpthread"
         AC_CHECK_LIB(pthread, pthread_create,
                      [USE_THREADS_POSIX=1],
                      [ CFLAGS="$save_CFLAGS"])
