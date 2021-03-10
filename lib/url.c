@@ -49,6 +49,10 @@
 #include <inet.h>
 #endif
 
+#ifdef __OS2__
+#include <libcx/net.h>
+#endif
+
 #ifdef HAVE_SYS_UN_H
 #include <sys/un.h>
 #endif
