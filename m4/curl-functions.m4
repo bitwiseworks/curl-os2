@@ -170,6 +170,9 @@ curl_includes_netdb="\
 #ifdef HAVE_NETDB_H
 #  include <netdb.h>
 #endif
+#ifdef __OS2__
+#  include <libcx/net.h>
+#endif
 /* includes end */"
   AC_CHECK_HEADERS(
     sys/types.h netdb.h,
@@ -574,6 +577,10 @@ curl_includes_netif="\
 #ifdef HAVE_NET_IF_H
 #  include <net/if.h>
 #endif
+#ifdef __OS2__
+#  include <libcx/net.h>
+#endif
+
 /* includes end */"
   AC_CHECK_HEADERS(
     net/if.h,
@@ -2346,6 +2353,9 @@ AC_DEFUN([CURL_CHECK_FUNC_GAI_STRERROR], [
       $curl_includes_winsock2
       $curl_includes_bsdsocket
       $curl_includes_netdb
+      #ifdef __OS2__
+      #include <libcx/net.h>
+      #endif
     ]],[[
       if(0 != gai_strerror(0))
         return 1;
@@ -2364,6 +2374,9 @@ AC_DEFUN([CURL_CHECK_FUNC_GAI_STRERROR], [
       $curl_includes_winsock2
       $curl_includes_bsdsocket
       $curl_includes_netdb
+      #ifdef __OS2__
+      #include <libcx/net.h>
+      #endif
     ],[
       AC_MSG_RESULT([yes])
       tst_proto_gai_strerror="yes"
@@ -2380,6 +2393,9 @@ AC_DEFUN([CURL_CHECK_FUNC_GAI_STRERROR], [
         $curl_includes_winsock2
       $curl_includes_bsdsocket
         $curl_includes_netdb
+      #ifdef __OS2__
+      #include <libcx/net.h>
+      #endif
       ]],[[
         if(0 != gai_strerror(0))
           return 1;
@@ -3149,6 +3165,9 @@ AC_DEFUN([CURL_CHECK_FUNC_IF_NAMETOINDEX], [
       $curl_includes_winsock2
       $curl_includes_bsdsocket
       #include <net/if.h>
+      #ifdef __OS2__
+      #include <libcx/net.h>
+      #endif
     ]],[[
       if(0 != if_nametoindex(""))
         return 1;

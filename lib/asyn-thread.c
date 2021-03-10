@@ -57,6 +57,10 @@
 #define in_addr_t unsigned long
 #endif
 
+#ifdef __OS2__
+#include <libcx/net.h>
+#endif
+
 #ifdef HAVE_GETADDRINFO
 #  define RESOLVER_ENOMEM  EAI_MEMORY
 #else
