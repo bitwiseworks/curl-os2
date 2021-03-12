@@ -74,7 +74,11 @@
 #include "curl_memory.h"
 #include "memdebug.h"
 
+#ifndef __OS2__
 #define SSL_DIR "/etc/pki/nssdb"
+#else
+#define SSL_DIR "/@unixroot/etc/pki/nssdb"
+#endif
 
 /* enough to fit the string "PEM Token #[0|1]" */
 #define SLOTSIZE 13
