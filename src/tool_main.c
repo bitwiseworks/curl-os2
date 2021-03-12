@@ -87,7 +87,7 @@ int _CRT_glob = 0;
  */
 static void main_checkfds(void)
 {
-#ifdef HAVE_PIPE
+#if defined(HAVE_PIPE) && !defined(__OS2__)
   int fd[2] = { STDIN_FILENO, STDIN_FILENO };
   while(fd[0] == STDIN_FILENO ||
         fd[0] == STDOUT_FILENO ||
